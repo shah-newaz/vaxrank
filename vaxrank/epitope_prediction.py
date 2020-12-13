@@ -67,7 +67,7 @@ class EpitopePrediction(Serializable):
             self,
             midpoint=350.0,
             width=150.0,
-            ic50_cutoff=5000.0):  # TODO: add these default values into CLI as arguments
+            ic50_cutoff=5.0):  # TODO: add these default values into CLI as arguments
         """
         Map from IC50 values to score where 1.0 = strong binder, 0.0 = weak binder
         Default midpoint and width for logistic determined by max likelihood fit
