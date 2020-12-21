@@ -1,3 +1,5 @@
+# Copyright (c) 2016-2018. Mount Sinai School of Medicine
+#
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
@@ -43,12 +45,12 @@ if __name__ == '__main__':
         name='vaxrank',
         version=version,
         description="Mutant peptide ranking for personalized cancer vaccines",
-        author="Alex Rubinsteyn, Julia Kodysh",
-        author_email="alex@openvax.org, julia@openvax.org",
-        url="https://github.com/openvax/vaxrank",
+        author="Alex Rubinsteyn",
+        author_email="alex.rubinsteyn@gmail.com",
+        url="https://github.com/hammerlab/vaxrank",
         license="http://www.apache.org/licenses/LICENSE-2.0.html",
         classifiers=[
-            'Development Status :: 4 - Beta',
+            'Development Status :: 3 - Alpha',
             'Environment :: Console',
             'Operating System :: OS Independent',
             'Intended Audience :: Science/Research',
@@ -62,7 +64,7 @@ if __name__ == '__main__':
             'pandas',
             'pyensembl>=1.5.0',
             'varcode>=0.5.9',
-            'isovar>=1.1.1',
+            'isovar>=0.8.5',
             'mhctools>=1.5.0',
             'roman',
             'jinja2',
