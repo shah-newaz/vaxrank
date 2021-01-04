@@ -45,7 +45,7 @@ class EpitopePrediction(EpitopePredictionBase):
             self,
             midpoint=350.0,
             width=150.0,
-            ic50_cutoff=10.0):  # TODO: add these default values into CLI as arguments
+            el_cutoff=10.0):  # TODO: add these default values into CLI as arguments
         """
         Map from IC50 values to score where 1.0 = strong binder, 0.0 = weak binder
         Default midpoint and width for logistic determined by max likelihood fit
@@ -57,18 +57,10 @@ class EpitopePrediction(EpitopePredictionBase):
         TODO: Use a large dataset to find MHC binding range predicted to #
         correlate with immunogenicity
         """
-        if self.ic50 >= ic50_cutoff:
+        if self.percentile_rank >= el_cutoff:
             return 0.0
 
-        rescaled = (float(self.ic50) - midpoint) / width
-        # simplification of 1.0 - logistic(x) = logistic(-x)
-        logistic = 1.0 / (1.0 + np.exp(rescaled))
-
-        # since we're scoring IC50 values, let's normalize the output
-        # so IC50 near 0.0 always returns a score of 1.0
-        normalizer = 1.0 / (1.0 + np.exp(-midpoint / width))
-
-        return logistic / normalizer
+        return self.score
 
 
 def predict_epitopes(
@@ -237,7 +229,7 @@ def slice_epitope_predictions(
             peptide_sequence=p.peptide_sequence,
             wt_peptide_sequence=p.wt_peptide_sequence,
             length=p.length,
-            ic50=p.ic50,
+            ic50=p.percentile_rank,
             wt_ic50=p.wt_ic50,
             percentile_rank=p.percentile_rank,
             prediction_method_name=p.prediction_method_name,
