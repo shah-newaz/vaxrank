@@ -11,8 +11,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 from __future__ import absolute_import, print_function, division
+import json
 import sys
 import logging
 import logging.config
@@ -20,7 +20,7 @@ import pkg_resources
 
 from argparse import ArgumentParser
 from isovar.cli.rna_args import allele_reads_generator_from_args
-from isovar.cli.translation_args import add_translation_args
+from iso var.cli.translation_args import add_translation_args
 from isovar.cli.variant_sequences_args import make_variant_sequences_arg_parser
 from mhctools.cli import (
     add_mhc_args,
@@ -44,6 +44,7 @@ from .report import (
     TemplateDataCreator,
     PatientInfo,
 )
+import os, subprocess
 
 logger = logging.getLogger(__name__)
 
@@ -424,6 +425,15 @@ def main(args_list=None):
         cosmic_vcf_filename=args.cosmic_vcf_filename)
 
     template_data = template_data_creator.compute_template_data()
+    if args.output_json_file:
+        output_file_name = args.output_json_file
+        output_file_name = output_file_name.rsplit('.', 1)[0]
+        with open(output_file_name + '-merged-report.json', 'w') as f:
+            f.write(serializable.to_json(template_data))
+            logger.info('Wrote Full JSON report data to %s', output_file_name)
+        # Run Sanoskas' report parser
+        d = dict(os.environ)   # Make a copy of the current environment
+        subprocess.Popen(['$JAVA11', '-jar', '$PEPTIDE_SEL ' + output_file_name + '-merged-report.json ' + output_file_name + '-merged-report.xlsx'], env=d)
 
     if args.output_ascii_report:
         make_ascii_report(
