@@ -20,7 +20,7 @@ import pkg_resources
 
 from argparse import ArgumentParser
 from isovar.cli.rna_args import allele_reads_generator_from_args
-from iso var.cli.translation_args import add_translation_args
+from isovar.cli.translation_args import add_translation_args
 from isovar.cli.variant_sequences_args import make_variant_sequences_arg_parser
 from mhctools.cli import (
     add_mhc_args,
