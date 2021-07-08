@@ -31,6 +31,7 @@ EpitopePredictionBase = namedtuple("EpitopePrediction", [
     "ic50",
     "el_score",
     "wt_ic50",
+    "wt_el",
     "percentile_rank",
     "prediction_method_name",
     "overlaps_mutation",
@@ -175,6 +176,7 @@ def predict_epitopes(
             wt_peptide = wt_peptides[peptide]
             wt_prediction = wt_predictions_grouped.get((wt_peptide, binding_prediction.allele))
             wt_ic50 = None
+            wt_el = None
             if wt_prediction is None:
                 # this can happen in a stop-loss variant: do we want to check that here?
                 if len(wt_peptide) < mhc_predictor.min_peptide_length:
@@ -183,10 +185,12 @@ def predict_epitopes(
                         wt_peptide)
             else:
                 wt_ic50 = wt_prediction.value
+                wt_el = wt_prediction.percentile_rank
 
         else:
             wt_peptide = peptide
             wt_ic50 = binding_prediction.value
+            wt_el = binding_prediction.percentile_rank
 
         epitope_prediction = EpitopePrediction(
             allele=binding_prediction.allele,
@@ -196,6 +200,7 @@ def predict_epitopes(
             ic50=binding_prediction.value,
             el_score=binding_prediction.score,
             wt_ic50=wt_ic50,
+            wt_el=wt_el,
             percentile_rank=binding_prediction.percentile_rank,
             prediction_method_name=binding_prediction.prediction_method_name,
             overlaps_mutation=overlaps_mutation,
