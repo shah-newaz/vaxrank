@@ -163,6 +163,11 @@ def add_output_args(arg_parser):
              "for use by the vaccine manufacturer.")
 
     output_args_group.add_argument(
+        "--output-merged-report-file",
+        default="",
+        help="Path to XLSX merged report.")
+
+    output_args_group.add_argument(
         "--output-neoepitope-report",
         default="",
         help="Path to XLSX neoepitope report, containing information focusing on short peptide "
