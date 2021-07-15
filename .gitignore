@@ -72,3 +72,4 @@ vaccine-peptides.csv
 neoepitope-report.xlsx
 .idea/*
 venv/*
+vaxrank/.idea/misc.xml

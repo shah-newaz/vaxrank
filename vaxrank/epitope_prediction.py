@@ -238,6 +238,7 @@ def slice_epitope_predictions(
             ic50=p.ic50,
             el_score=p.el_score,
             wt_ic50=p.wt_ic50,
+            wt_el=p.wt_el,
             percentile_rank=p.percentile_rank,
             prediction_method_name=p.prediction_method_name,
             overlaps_mutation=p.overlaps_mutation,
